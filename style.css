@@ -1,0 +1,24 @@
+.container{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-top: 200px;
+}
+
+.image-container {
+    width: 50%;
+    height: 50%;
+    background-color: lightgray;
+    background-size: cover;
+    text-align: center;
+    line-height: 300px;
+    font-size: 18px;
+    color: white;
+    font-weight: bold;
+}
+.preview {
+    margin: 10px;
+    width: 100px;
+    height: 100px;
+    cursor: pointer;
+}
