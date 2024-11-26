@@ -1,31 +1,43 @@
 // Function to update the content and background of the image div
 function upDate(previewPic) {
-    // Log to verify the event is triggering and previewPic info
-    console.log(previewPic); // log the previewPic object
-    console.log("Alt text:", previewPic.alt);
-    console.log("Source:", previewPic.src);
-
-    // Update the text content of the div with id="image"
-    document.getElementById('image').textContent = previewPic.alt;
-
-    // Change the background image of the div with id="image"
-    document.getElementById('image').style.backgroundImage = `url(${previewPic.src})`;
+    console.log("Mouseover or focus triggered for:", previewPic.alt);
+    const imageDiv = document.getElementById('image');
+    imageDiv.textContent = previewPic.alt;
+    imageDiv.style.backgroundImage = `url(${previewPic.src})`;
 }
 
 // Function to undo changes and reset the image div
 function undo() {
-    // Reset the background image and text content
-    document.getElementById('image').style.backgroundImage = "url('')";
-    document.getElementById('image').textContent = "Hover over an image below to display here.";
+    console.log("Mouseout or blur triggered");
+    const imageDiv = document.getElementById('image');
+    imageDiv.style.backgroundImage = "";
+    imageDiv.textContent = "Hover over an image below to display here.";
 }
 
-// Adding event listeners to images
+// Function to add tabindex and console log on load
+function onLoadPage() {
+    console.log("Page loaded. Adding tabindex attributes.");
+    const images = document.querySelectorAll('.preview');
+    images.forEach((image, index) => {
+        image.setAttribute("tabindex", index + 1); // Ensure all images are keyboard navigable
+    });
+}
+
+// Adding event listeners
+document.addEventListener("DOMContentLoaded", onLoadPage);
+
 const images = document.querySelectorAll('.preview');
+
 images.forEach(image => {
+    // Mouse events
     image.addEventListener('mouseover', function() {
         upDate(image);
     });
-});
+    image.addEventListener('mouseout', undo);
 
-// Adding an event listener to reset on mouseout
-document.getElementById('image').addEventListener('mouseout', undo);
+    // Keyboard focus events
+    image.addEventListener('focus', function() {
+        upDate(image);
+    });
+    image.addEventListener('blur', undo);
+});
